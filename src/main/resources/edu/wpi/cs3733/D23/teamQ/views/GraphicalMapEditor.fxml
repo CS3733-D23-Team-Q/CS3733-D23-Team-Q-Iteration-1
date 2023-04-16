@@ -1,21 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="root" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.D23.teamQ.controllers.GraphicalMapEditorController">
+<AnchorPane fx:id="root" prefHeight="680.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.D23.teamQ.controllers.GraphicalMapEditorController">
    <children>
       <Group fx:id="parent">
          <children>
-            <ImageView fitHeight="680.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="680.0" fitWidth="1000.0" layoutX="-1.0" layoutY="-1.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../L1.png" />
                </image>
             </ImageView>
          </children>
       </Group>
+      <VBox alignment="TOP_CENTER" layoutX="1000.0" prefHeight="680.0" prefWidth="304.0" style="-fx-background-color: #142A53;">
+         <children>
+            <VBox alignment="CENTER" prefHeight="43.0" prefWidth="321.0">
+               <children>
+                  <Label text="Node" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="259.0" prefWidth="321.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="259.0" prefWidth="279.0" style="-fx-background-color: #FFFFFF;">
+                     <children>
+                        <GridPane alignment="CENTER" prefHeight="243.0" prefWidth="205.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.0" minWidth="0.0" prefWidth="74.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="3.0" prefWidth="193.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="18.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="19.0" minHeight="8.0" prefHeight="14.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="nodeidinput" alignment="CENTER" prefHeight="23.0" prefWidth="235.0" promptText="Input or click" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="X-coord" textFill="#142a53" GridPane.rowIndex="1" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Y-coord" textFill="#142a53" GridPane.rowIndex="2" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Floor" textFill="#142a53" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Building" textFill="#142a53" GridPane.rowIndex="4" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LongName" textFill="#142a53" GridPane.rowIndex="5" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ShortName" textFill="#142a53" GridPane.rowIndex="6" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="NodeType" textFill="#142a53" GridPane.rowIndex="7" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="NodeID" textFill="#142a53" />
+                              <TextField alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="xinitial">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="yinitial" alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="floorinitial" alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="buildinginitial" alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="longnameinitial" alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="shortnameinitial" alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="nodetypeinitial" alignment="CENTER" text="--" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </TextField>
+                              <Label fx:id="alerts" prefHeight="16.0" prefWidth="243.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <ImageView fx:id="image" fitHeight="7.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <GridPane alignment="CENTER" prefHeight="28.0" prefWidth="321.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#findclicked" prefHeight="39.0" prefWidth="64.0" style="-fx-background-color: #142A53;" text="Find" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#deleteclicked" prefHeight="36.0" prefWidth="64.0" style="-fx-background-color: #142A53;" text="Delete" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#setclicked" prefHeight="34.0" prefWidth="64.0" style="-fx-background-color: #142A53;" text="Set" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#addclicked" prefHeight="36.0" prefWidth="64.0" style="-fx-background-color: #142A53;" text="Add" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#clearclicked" prefHeight="48.0" prefWidth="65.0" style="-fx-background-color: #142A53;" text="Clear" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </GridPane>
+            <VBox prefHeight="317.0" prefWidth="304.0" />
+            <HBox prefHeight="39.0" prefWidth="304.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="RIGHT" minHeight="19.0" mnemonicParsing="false" onMouseClicked="#helpClicked" prefHeight="44.0" prefWidth="304.0" style="-fx-background-color: #142A53;" text="Help" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.cs3733.D23.teamQ.controllers.MapEditorHelpController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="36.0" prefHeight="29.0" prefWidth="479.0" text="Double-click the mouse: Enlarge the image.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="65.0" prefHeight="29.0" prefWidth="479.0" text="Right-click the mouse: Get the X-coord and Y-coord of the mouse.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="94.0" prefHeight="29.0" prefWidth="479.0" text="Find: Get the information and find the node on the map.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="123.0" prefHeight="29.0" prefWidth="479.0" text="Delete: Detele the node with nodeID.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="152.0" prefHeight="29.0" prefWidth="479.0" text="Set: Update the information of the node.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="181.0" prefHeight="29.0" prefWidth="479.0" text="Add: Add a new node.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="53.0" layoutY="210.0" prefHeight="29.0" prefWidth="479.0" text="Clear: Clear the node information table.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

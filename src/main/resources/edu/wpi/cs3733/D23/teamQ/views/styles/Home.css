@@ -43,3 +43,8 @@
     -fx-background-color: #B3BBC0;
     -fx-underline: false;
 }
+.button-dropdown{
+    -fx-font-color: #FFFFFF;
+    -fx-background-color: #142A53;
+
+}

@@ -340,7 +340,8 @@ public class NodeController {
   public static boolean isNumber(String str) {
     if (str == "") return false;
     for (char c : str.toCharArray()) {
-      if (!Character.isDigit(c)) {
+      String s = "" + c;
+      if (!Character.isDigit(c) || s.equals(".")) {
         return false;
       }
     }
