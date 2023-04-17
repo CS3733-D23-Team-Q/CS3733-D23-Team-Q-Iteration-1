@@ -171,7 +171,7 @@ public class GraphicalMapEditorController {
       if (!floor.equals(Floor(currentIndex))) {
         currentIndex = findFloor(floor);
         if (!button.isEmpty()) parent.getChildren().removeAll(button);
-        addButtons(Floor(currentIndex));
+        button = addButtons(Floor(currentIndex));
         imageView.setImage(image[currentIndex]);
         setFloor(currentIndex);
       }
@@ -229,7 +229,7 @@ public class GraphicalMapEditorController {
      root.getChildren().add(texts);
 
     */
-    addButtons(Floor(currentIndex));
+    button = addButtons(Floor(currentIndex));
 
     javafx.scene.Node node = parent;
     pane = new GesturePane(node);
@@ -284,19 +284,20 @@ public class GraphicalMapEditorController {
     currentIndex++;
     if (!button.isEmpty()) parent.getChildren().removeAll(button);
     if (currentIndex < file.length) {
-      addButtons(Floor(currentIndex));
+      button = addButtons(Floor(currentIndex));
       imageView.setImage(image[currentIndex]);
       // refresh();
 
     } else {
       currentIndex = 0;
-      addButtons(Floor(currentIndex));
+      button = addButtons(Floor(currentIndex));
       imageView.setImage(image[currentIndex]);
     }
     setFloor(currentIndex);
   }
 
-  public void addButtons(String floor) {
+  public List<Button> addButtons(String floor) {
+    List<Button> buttons = new ArrayList<>();
     List<Node> nodes = qdb.retrieveAllNodes();
     List<Node> L1nodes = new ArrayList<>();
     for (Node n : nodes) {
@@ -373,8 +374,9 @@ public class GraphicalMapEditorController {
               });
        */
       parent.getChildren().add(node);
-      button.add(node);
+      buttons.add(node);
     }
+    return buttons;
   }
 
   class Delta {
@@ -615,13 +617,13 @@ public class GraphicalMapEditorController {
     currentIndex--;
     if (!button.isEmpty()) parent.getChildren().removeAll(button);
     if (currentIndex > 0) {
-      addButtons(Floor(currentIndex));
+      button = addButtons(Floor(currentIndex));
       imageView.setImage(image[currentIndex]);
       // refresh();
 
     } else {
       currentIndex = 4;
-      addButtons(Floor(currentIndex));
+      button = addButtons(Floor(currentIndex));
       imageView.setImage(image[currentIndex]);
     }
     setFloor(currentIndex);
