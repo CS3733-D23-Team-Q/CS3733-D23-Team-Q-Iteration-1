@@ -8,6 +8,7 @@ import edu.wpi.cs3733.D23.teamQ.db.obj.Location;
 import edu.wpi.cs3733.D23.teamQ.db.obj.Node;
 import edu.wpi.cs3733.D23.teamQ.navigation.Navigation;
 import edu.wpi.cs3733.D23.teamQ.navigation.Screen;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +19,42 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 
 public class GraphicalMapEditorController {
+
+  private List<Line> line = new ArrayList<>();
+
+  private boolean displayEdges = false;
+  @FXML private Label WhichFloor;
+  List<Button> button = new ArrayList<>();
+
+  File[] file = {
+    new File("src/main/resources/01_thefirstfloor.png"),
+    new File("src/main/resources/02_thesecondfloor.png"),
+    new File("src/main/resources/03_thethirdfloor.png"),
+    new File("src/main/resources/00_thelowerlevel1.png"),
+    new File("src/main/resources/00_thelowerlevel2.png")
+  };
+
+  String[] images = new String[file.length];
+
+  Image[] image = new Image[images.length];
+  int currentIndex = 0;
+  @FXML private ImageView imageView;
+
+  @FXML private SplitMenuButton menu;
 
   Qdb qdb = Qdb.getInstance();
   // Stage stage = App.getPrimaryStage();
@@ -75,7 +101,7 @@ public class GraphicalMapEditorController {
 
   @FXML private Label alerts;
 
-  @FXML private ImageView image;
+  @FXML private ImageView image1;
 
   @FXML private TextField nodeidinput;
 
@@ -86,9 +112,9 @@ public class GraphicalMapEditorController {
    */
   @FXML
   void setclicked(MouseEvent event) {
-    if (nodeIDAlertone(nodeidinput, alerts, image)) {
-      if (coordAlert(xinitial, yinitial, alerts, image)) {
-        if (locationAlert(longnameinitial, shortnameinitial, nodetypeinitial, alerts, image)) {
+    if (nodeIDAlertone(nodeidinput, alerts, image1)) {
+      if (coordAlert(xinitial, yinitial, alerts, image1)) {
+        if (locationAlert(longnameinitial, shortnameinitial, nodetypeinitial, alerts, image1)) {
           nodeid = Integer.parseInt(nodeidinput.getText());
           newLongName = longnameinitial.getText();
           newNodeType = nodetypeinitial.getText();
@@ -122,7 +148,7 @@ public class GraphicalMapEditorController {
    */
   @FXML
   void deleteclicked(MouseEvent event) {
-    if (nodeIDAlertone(nodeidinput, alerts, image)) {
+    if (nodeIDAlertone(nodeidinput, alerts, image1)) {
       qdb.nodeTable.deleteRow(nodeid);
       qdb.locationTable.deleteRow(nodeid);
       refresh();
@@ -138,9 +164,17 @@ public class GraphicalMapEditorController {
    */
   @FXML
   void findclicked(MouseEvent event) {
-    if (nodeIDAlertone(nodeidinput, alerts, image)) {
+    if (nodeIDAlertone(nodeidinput, alerts, image1)) {
       nodeid = Integer.parseInt(nodeidinput.getText());
       NodeInformation(nodeid);
+      String floor = qdb.nodeTable.retrieveRow(nodeid).getFloor();
+      if (!floor.equals(Floor(currentIndex))) {
+        currentIndex = findFloor(floor);
+        if (!button.isEmpty()) parent.getChildren().removeAll(button);
+        addButtons(Floor(currentIndex));
+        imageView.setImage(image[currentIndex]);
+        setFloor(currentIndex);
+      }
       Point2D pivotOnTarget =
           new Point2D(
               qdb.nodeTable.retrieveRow(nodeid).getXCoord() / 5,
@@ -156,9 +190,9 @@ public class GraphicalMapEditorController {
 
   @FXML
   void addclicked(MouseEvent event) {
-    if (nodeIDAlerttwo(nodeidinput, alerts, image)) {
-      if (coordAlert(xinitial, yinitial, alerts, image)) {
-        if (locationAlert(longnameinitial, shortnameinitial, nodetypeinitial, alerts, image)) {
+    if (nodeIDAlerttwo(nodeidinput, alerts, image1)) {
+      if (coordAlert(xinitial, yinitial, alerts, image1)) {
+        if (locationAlert(longnameinitial, shortnameinitial, nodetypeinitial, alerts, image1)) {
           nodeid = Integer.parseInt(nodeidinput.getText());
           newLongName = longnameinitial.getText();
           newNodeType = nodetypeinitial.getText();
@@ -195,14 +229,15 @@ public class GraphicalMapEditorController {
      root.getChildren().add(texts);
 
     */
-    addButtons();
+    addButtons(Floor(currentIndex));
+
     javafx.scene.Node node = parent;
     pane = new GesturePane(node);
     root.getChildren().add(pane);
 
     pane.setOnMouseClicked(
         e -> {
-          if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+          if (e.getClickCount() == 2) {
             Point2D pivotOnTarget =
                 pane.targetPointAt(new Point2D(e.getX(), e.getY()))
                     .orElse(pane.targetPointAtViewportCentre());
@@ -219,7 +254,6 @@ public class GraphicalMapEditorController {
             yinitial.setText(Integer.toString(ycoord));
           }
         });
-
     /*
     Text texts = new Text();
     root.setOnMouseClicked(
@@ -233,13 +267,40 @@ public class GraphicalMapEditorController {
     parent.getChildren().add(texts);
 
      */
+
+    for (int i = 0; i < file.length; i++) {
+      images[i] = file[i].toURI().toString();
+    }
+
+    for (int i = 0; i < images.length; i++) {
+      image[i] = new Image(images[i]);
+    }
+    imageView.setImage(image[currentIndex]);
+    WhichFloor.setText("The First Floor");
   }
 
-  public void addButtons() {
+  void shownext() {
+    HideEdges();
+    currentIndex++;
+    if (!button.isEmpty()) parent.getChildren().removeAll(button);
+    if (currentIndex < file.length) {
+      addButtons(Floor(currentIndex));
+      imageView.setImage(image[currentIndex]);
+      // refresh();
+
+    } else {
+      currentIndex = 0;
+      addButtons(Floor(currentIndex));
+      imageView.setImage(image[currentIndex]);
+    }
+    setFloor(currentIndex);
+  }
+
+  public void addButtons(String floor) {
     List<Node> nodes = qdb.retrieveAllNodes();
     List<Node> L1nodes = new ArrayList<>();
     for (Node n : nodes) {
-      if (n.getFloor().equals("1")) {
+      if (n.getFloor().equals(floor)) {
         L1nodes.add(n);
       }
     }
@@ -256,6 +317,7 @@ public class GraphicalMapEditorController {
               + "-fx-max-width: 3px;"
               + "-fx-max-height: 3px;"
               + "-fx-background-insets: 0px;");
+
       node.setOnMouseClicked(
           e -> {
             int nodeID = n.getNodeID();
@@ -311,6 +373,7 @@ public class GraphicalMapEditorController {
               });
        */
       parent.getChildren().add(node);
+      button.add(node);
     }
   }
 
@@ -481,5 +544,134 @@ public class GraphicalMapEditorController {
 
   void refresh() {
     Navigation.navigate(Screen.GRAPHICAL_MAP_EDITOR);
+  }
+
+  List<javafx.scene.shape.Line> addLines(List<Node> path) {
+    List<javafx.scene.shape.Line> lines = new ArrayList<>();
+    for (int i = path.size() - 1; i >= 1; i--) {
+      Node n = path.get(i);
+      Node next = path.get(i - 1);
+      int x1 = n.getXCoord() / 5;
+      int y1 = n.getYCoord() / 5;
+      int x2 = next.getXCoord() / 5;
+      int y2 = next.getYCoord() / 5;
+      javafx.scene.shape.Line line = new Line(x1, y1, x2, y2);
+      line.setStyle("-fx-stroke: blue;");
+      line.setStrokeWidth(0.5);
+      parent.getChildren().add(line);
+      lines.add(line);
+    }
+    displayEdges = true;
+    return lines;
+  }
+
+  void removeLines(List<Line> lines) {
+    if (lines.size() > 0) {
+      for (Line line : lines) {
+        parent.getChildren().remove(line);
+      }
+    }
+  }
+
+  List<Node> chooseLines(int floor) {
+    List<Node> path = new ArrayList<>();
+    for (int i = 0; i < qdb.edgeTable.getAllRows().size(); i++) {
+      Node start = qdb.edgeTable.getAllRows().get(i).getStartNode();
+      Node target = qdb.edgeTable.getAllRows().get(i).getEndNode();
+      if (nodeOnTheFloor(start, floor) && nodeOnTheFloor(target, floor)) {
+        path.add(start);
+        path.add(target);
+      }
+    }
+    return path;
+  }
+
+  @FXML
+  void NextClicked(MouseEvent event) {
+    shownext();
+  }
+
+  String Floor(int x) {
+    if (x == 0) {
+      return "1";
+    } else if (x == 1) {
+      return "2";
+    } else if (x == 2) {
+      return "3";
+    } else if (x == 3) {
+      return "L1";
+    } else {
+      return "L2";
+    }
+  }
+
+  @FXML
+  void LastClicked(MouseEvent event) {
+    showlast();
+  }
+
+  void showlast() {
+    HideEdges();
+    currentIndex--;
+    if (!button.isEmpty()) parent.getChildren().removeAll(button);
+    if (currentIndex > 0) {
+      addButtons(Floor(currentIndex));
+      imageView.setImage(image[currentIndex]);
+      // refresh();
+
+    } else {
+      currentIndex = 4;
+      addButtons(Floor(currentIndex));
+      imageView.setImage(image[currentIndex]);
+    }
+    setFloor(currentIndex);
+  }
+
+  void setFloor(int x) {
+    if (x == 0) {
+      WhichFloor.setText("The First Floor");
+    } else if (x == 1) {
+      WhichFloor.setText("The Second Floor");
+    } else if (x == 2) {
+      WhichFloor.setText("The Third Floor");
+    } else if (x == 3) {
+      WhichFloor.setText("The Lower Level 1");
+    } else {
+      WhichFloor.setText("The Lower Level 2");
+    }
+  }
+
+  int findFloor(String floor) {
+    if (floor.equals("1")) {
+      return 0;
+    } else if (floor.equals("2")) {
+      return 1;
+    } else if (floor.equals("3")) {
+      return 2;
+    } else if (floor.equals("L1")) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  @FXML
+  void EdgesDispalyClicked(MouseEvent event) {
+    line = addLines(chooseLines(currentIndex));
+  }
+
+  @FXML
+  void EdgesHidingClicked(MouseEvent event) {
+    HideEdges();
+  }
+
+  boolean nodeOnTheFloor(Node node, int floor) {
+    if (node.getFloor().equals(Floor(floor))) return true;
+    return false;
+  }
+
+  void HideEdges() {
+    if (displayEdges == true) removeLines(line);
+    displayEdges = false;
   }
 }
